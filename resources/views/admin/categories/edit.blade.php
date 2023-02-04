@@ -33,7 +33,7 @@
                         <div class="sm:col-span-6">
                             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                             <div class="mt-1">
-                                <textarea type="text" name="description" id="p-2 description" class="block w-full transition duration-150 ease-in-out bg-white border border-gray-400 rounded">{{ $category->description }}</textarea>
+                                <textarea type="text" name="description" id="description" class="block w-full transition duration-150 ease-in-out bg-white border border-gray-400 rounded">{{ $category->description }}</textarea>
                             </div>
                         </div>
                         <div class="mt-5 p-4">

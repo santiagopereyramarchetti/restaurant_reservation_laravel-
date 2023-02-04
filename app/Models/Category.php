@@ -14,4 +14,8 @@ class Category extends Model
         'image',
         'description'
     ];
+
+    public function menues(){
+        return $this->belongsToMany(Menu::class);
+    }
 }
