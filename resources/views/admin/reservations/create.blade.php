@@ -73,7 +73,7 @@
                             <div class="mt-1">
                                 <select type="text" name="table_id" id="table_id" class="block w-full transition duration-150 ease-in-out bg-white border border-gray-400 rounded @error('table_id') border-red-600 @enderror">
                                     @foreach ($tables as $table)
-                                        <option value="{{ $table->id }}"> {{ $table->name }}</option>    
+                                        <option value="{{ $table->id }}"> {{ $table->name }} ({{ $table->guest_number }} Guest)</option>    
                                     @endforeach
                                 </select>
                             </div>
