@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TableStoreRequest;
+use App\Http\Requests\TableUpdateRequest;
 use App\Models\Table;
 use Illuminate\Http\Request;
 
@@ -35,9 +37,18 @@ class TableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TableStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Table::create([
+            'name' => $validated['name'],
+            'guest_number' => $validated['guest_number'],
+            'status' => $validated['status'],
+            'location' => $validated['location'],
+        ]);
+
+        return to_route('admin.tables.index');
     }
 
     /**
@@ -57,9 +68,9 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Table $table)
     {
-        //
+        return view('admin.tables.edit', compact('table'));
     }
 
     /**
@@ -69,9 +80,16 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TableUpdateRequest $request, Table $table)
     {
-        //
+        $validated = $request->validated();
+        $table->update([
+            'name' => $validated['name'],
+            'guest_number' => $validated['guest_number'],
+            'status' => $validated['status'],
+            'location' => $validated['location'],
+        ]);
+        return to_route('admin.tables.index');
     }
 
     /**
@@ -80,8 +98,9 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Table $table)
     {
-        //
+        $table->delete();
+        return to_route('admin.tables.index');
     }
 }

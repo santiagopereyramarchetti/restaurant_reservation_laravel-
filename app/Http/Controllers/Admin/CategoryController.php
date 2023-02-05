@@ -111,6 +111,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        Storage::delete($category->image);
+        $category->menues()->detach();
         $category->delete();
 
         return to_route('admin.categories.index');

@@ -114,6 +114,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menue)
     {
+        Storage::delete($menue->image);
+        $menue->categories()->detach();
         $menue->delete();
         return to_route('admin.menues.index');
     }
