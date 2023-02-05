@@ -53,7 +53,7 @@ class MenuController extends Controller
         if(isset($validated['categories'])){
             $menu->categories()->attach($validated['categories']);
         }
-        return to_route('admin.menues.index');
+        return to_route('admin.menues.index')->with('success', 'Menu created successfully');
     }
 
     /**
@@ -103,7 +103,7 @@ class MenuController extends Controller
             'price' => $validated['price'],
             'image' => $image
         ]);
-        return to_route('admin.menues.index');
+        return to_route('admin.menues.index')->with('success', 'Menu updated successfully');
     }
 
     /**
@@ -117,6 +117,6 @@ class MenuController extends Controller
         Storage::delete($menue->image);
         $menue->categories()->detach();
         $menue->delete();
-        return to_route('admin.menues.index');
+        return to_route('admin.menues.index')->with('success', 'Menu deleted successfully');
     }
 }
