@@ -52,7 +52,6 @@ class ReservationController extends Controller
         };
 
         $request_date = Carbon::parse($validated['res_date']);
-        
         foreach($table->reservations as $res){
             if($res->res_date->format('Y-m-d') == $request_date->format('Y-m-d')){
                 return back()->with('warning', 'This table is reserved for this date');
@@ -82,7 +81,8 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-        //
+        $tables = Table::where('status', TableStatus::Avaliable)->get();
+        return view('admin.reservations.edit', compact('reservation', 'tables'));
     }
 
     /**
@@ -94,7 +94,23 @@ class ReservationController extends Controller
      */
     public function update(ReservationUpdateRequest $request, Reservation $reservation)
     {
-        //
+        $validated = $request->validated();
+
+        $table = Table::findOrFail($validated['table_id']);
+        if($validated['guest_number'] > $table->guest_number){
+            return back()->with('warning', 'Please choose the table base on guests');
+        };
+
+        $request_date = Carbon::parse($validated['res_date']);
+        $reservations = Reservation::where('id','!=', $reservation->id);
+        foreach($reservations as $res){
+            if($res->res_date->format('Y-m-d') == $request_date->format('Y-m-d')){
+                return back()->with('warning', 'This table is reserved for this date');
+            }
+        }
+
+        $reservation->update($validated);
+        return to_route('admin.reservations.index')->with('success', 'Reservation updated successfully');
     }
 
     /**

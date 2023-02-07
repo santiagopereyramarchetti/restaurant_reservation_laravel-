@@ -6,7 +6,7 @@ use App\Rules\DateBetween;
 use App\Rules\TimeBetween;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReservationUpdateRequest extends FormRequest
+class StoreStepOneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,6 @@ class ReservationUpdateRequest extends FormRequest
             'email' => ['required', 'email'],
             'res_date' => ['required', new DateBetween, new TimeBetween],
             'tel_number' => ['required'],
-            'table_id' => ['required'],
             'guest_number' => ['required'],
         ];
     }
